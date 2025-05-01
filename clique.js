@@ -31,7 +31,7 @@ document.addEventListener('pointerdown', (evento) => {
         function revelarCelulas(linha, coluna){
             const celulaID = `cell-${linha * 10 + coluna}`;
             
-            // Verificar se já foi visitada ou está fora dos limites
+            
             if(cellVisitadas.has(celulaID) || linha < 0 || linha >= 8 || coluna < 0 || coluna >= 10) {
                 return;
             }
@@ -44,7 +44,7 @@ document.addEventListener('pointerdown', (evento) => {
                
             }
             document.getElementById(celulaID).setAttribute('started-game', 'true');
-            // Se for 0, revelar todas as células vizinhas
+            
             if(valor === 0){
                 elemento.classList.add('NumZero');
                 for(const [x, y] of posicoes){

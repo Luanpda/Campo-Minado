@@ -1,10 +1,12 @@
-
+body{
+    height: 100vh;
+    background-color: #222831;
+}
 
 
 .container{
     display: grid;
     grid-template-columns: repeat(10, 30px);
-    gap: 2px;
     margin: 20px auto;
     width: max-content;
         
@@ -16,15 +18,22 @@
 .cell {
     width: 30px;
     height: 30px;
-    background-color: #ccc;
-    border: 1px solid #999;
+    background-color: white;
+    border: 1px solid black;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    user-select: none;
   }
 
-  .NumZero{
-    background-color: aqua;
+.cell:hover{
+    background-color: #99c2ff;
+}
+
+
+
+.NumZero{
+    background-color: #9e9e9e; 
 
   }
