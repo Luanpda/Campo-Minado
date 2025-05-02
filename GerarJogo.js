@@ -44,10 +44,10 @@ function gerarBombas(dificuldade,tabuleiro,celula){
         bombas = 10;
         
         } else if(dificuldade === 'medio') {
-        bombas = 20;
+        bombas = 40;
 
         } else if(dificuldade === 'dificil') {
-        bombas = 30;  
+        bombas = 70;  
          }
         
         while( bombasColocadas < bombas){
