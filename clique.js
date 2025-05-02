@@ -1,22 +1,32 @@
 import { CriarJogo } from "./GerarJogo.js";
+import { getDificuldade,getTabuleiro,setTabuleiro} from "./dificuldade.js";
 
 
-let tabuleiro = null;
 
 
 document.addEventListener('pointerdown', (evento) => {
+    if (evento.button !== 0) return;
     const celula = evento.target;
-    const celulaid = celula.id;
-    const numero = parseInt(celulaid.split('-')[1]);
-    const linhaClicada = Math.floor(numero / 10); 
-    const colunaClicada = numero % 10;
 
 
     
-    if(celula.classList.contains('cell') && celula.getAttribute('started-game') !== 'true'){
+    if(celula.classList.contains('cell') && celula.getAttribute('started-game') !== 'true' && !celula.classList.contains('flagAdd')){
+
+        let tabuleiro = getTabuleiro();
+
         if(!tabuleiro){
-            tabuleiro = CriarJogo('facil', celula);
+            const dificuldade = getDificuldade();
+            const novotabuleiro = CriarJogo(dificuldade, celula);
+            setTabuleiro(novotabuleiro);
+            tabuleiro = novotabuleiro;
+            console.log("Tabuleiro criado com dimensões:", tabuleiro.length, "x", tabuleiro[0].length);
         }
+        const colunas = tabuleiro[0].length;
+        
+        const celulaid = celula.id;
+        const numero = parseInt(celulaid.split('-')[1]);
+        const linhaClicada = Math.floor(numero / colunas); 
+        const colunaClicada = numero % colunas;
         const posicoes = [
             [-1, 0], 
             [0, -1], [0, 0], [0, 1],
@@ -29,10 +39,11 @@ document.addEventListener('pointerdown', (evento) => {
         const cellVisitadas = new Set();
 
         function revelarCelulas(linha, coluna){
-            const celulaID = `cell-${linha * 10 + coluna}`;
+            const numColunas = tabuleiro[0].length;
+            const celulaID = `cell-${linha * numColunas + coluna}`;
             
             
-            if(cellVisitadas.has(celulaID) || linha < 0 || linha >= 8 || coluna < 0 || coluna >= 10) {
+            if(cellVisitadas.has(celulaID) || linha < 0 || linha >= tabuleiro.length || coluna < 0 || coluna >= tabuleiro[0].length) {
                 return;
             }
 
@@ -55,4 +66,27 @@ document.addEventListener('pointerdown', (evento) => {
 
         revelarCelulas(linhaClicada, colunaClicada);
     }
+});
+
+document.addEventListener('contextmenu',(evento) => {
+    const celula = evento.target;
+    
+    if( celula.classList.contains('cell') ){
+
+
+        if(!celula.textContent){
+
+            if( !celula.classList.contains('flagAdd')){
+                celula.classList.add('flagAdd');
+                evento.preventDefault();
+            }else{
+                celula.classList.remove('flagAdd');
+                evento.preventDefault();
+            }
+        }else{
+            evento.preventDefault();
+        }
+
+    }
+    
 });

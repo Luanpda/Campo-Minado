@@ -10,17 +10,13 @@
     <div class=" container">
         
     </div>
-    <script>
-        const container = document.querySelector('.container');
-        for(let i = 0;i < 80; i++){
-            const cell = document.createElement('div');
-            cell.id = `cell-${i}`;
-            cell.classList.add('cell');
-            cell.setAttribute('started-game', 'false');
-            
-            container.appendChild(cell);
-        }
-    </script>
+    <div>
+        <button id="facil">facil</button>
+        <button id="medio">medio</button>
+        <button id="dificil">dificil</button>
+    </div>
+    
     <script src="clique.js" type="module"></script>
+    <script src="criarCells.js" type="module"></script>
 </body>
 </html>
