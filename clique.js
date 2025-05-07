@@ -1,7 +1,11 @@
 import { CriarJogo } from "./GerarJogo.js";
 import { getDificuldade,getTabuleiro,setTabuleiro} from "./dificuldade.js";
 
-
+function mostrarModalGameOver() {
+    document.getElementById('game-over-modal').style.display = 'flex';
+    // Opcional: desabilita interações no tabuleiro
+    // document.getElementById('tabuleiro').style.pointerEvents = 'none';
+  }
 
 
 document.addEventListener('pointerdown', (evento) => {
@@ -51,7 +55,14 @@ document.addEventListener('pointerdown', (evento) => {
             const elemento = document.getElementById(celulaID);
             const valor = tabuleiro[linha][coluna];
             if(valor !== 0){
-                elemento.textContent = valor;
+                if(valor === -1){
+                    elemento.classList.add('bombAdd');
+                    mostrarModalGameOver();
+                }else{
+                    elemento.textContent = valor;
+
+                }
+                
                
             }
             document.getElementById(celulaID).setAttribute('started-game', 'true');

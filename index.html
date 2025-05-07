@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,11 +25,25 @@
 
     </div>
     <div class=" container">
+        <div id="game-over-modal" class="modal">
+            <div class="modal-content">
+              <h2>💥 Game Over!</h2>
+              <p>Você perdeu o jogo.</p>
+              <button onclick="reiniciarJogo()">Tentar Novamente</button>
+            </div>
+          </div>
         
     </div>
     
     
-    <script src="clique.js" type="module"></script>
-    <script src="criarCells.js" type="module"></script>
+    <div id="game-over-modal" >
+    <div id="conteudo-modal">
+      <h2>Game Over!</h2>
+      <button onclick="location.reload()">Reiniciar</button>
+    </div>
+  </div>
+  
+    <script src="clique.js" type="module" ></script>
+    <script src="criarCells.js" type="module" ></script>
 </body>
 </html>

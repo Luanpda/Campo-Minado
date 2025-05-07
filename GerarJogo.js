@@ -37,32 +37,65 @@ function gerarBombas(dificuldade,tabuleiro,celula){
         const colunas = tabuleiro[0].length;
         
         const proibidas = celulasProibidas(celula,colunas);
-        let bombasColocadas = 0;
-        let bombas;
+       
+       
 
         if(dificuldade === 'facil') {
-        bombas = 10;
+        
+        const bombasPorQuadrante = 4;
+        colocarBombas(0, linhas / 2,0, colunas / 2,bombasPorQuadrante,tabuleiro,proibidas);
+        //superior direito
+        colocarBombas(0, linhas/2, colunas/2 , colunas,bombasPorQuadrante,tabuleiro,proibidas);
+        //inferior esquerdo
+        colocarBombas(linhas/2, linhas,0,colunas/2,bombasPorQuadrante,tabuleiro,proibidas);
+        //inferior direito
+        colocarBombas(linhas/2, linhas,colunas/2,colunas,bombasPorQuadrante,tabuleiro,proibidas);;
         
         } else if(dificuldade === 'medio') {
-        bombas = 40;
+        
+        const bombasPorQuadrante = 10;
+        colocarBombas(0, linhas / 2,0, colunas / 2,bombasPorQuadrante,tabuleiro,proibidas);
+        //superior direito
+        colocarBombas(0, linhas/2, colunas/2 , colunas,bombasPorQuadrante,tabuleiro,proibidas);
+        //inferior esquerdo
+        colocarBombas(linhas/2, linhas,0,colunas/2,bombasPorQuadrante,tabuleiro,proibidas);
+        //inferior direito
+        colocarBombas(linhas/2, linhas,colunas/2,colunas,bombasPorQuadrante,tabuleiro,proibidas);;
 
         } else if(dificuldade === 'dificil') {
-        bombas = 70;  
-         }
         
-        while( bombasColocadas < bombas){
-            const linha = Math.floor(Math.random() * linhas);
-            const coluna = Math.floor(Math.random() * colunas);
+        const bombasPorQuadrante = 18;
 
-            const éProibida = proibidas.some(([x, y]) => x === linha && y === coluna);
+        //superior esquerdo
+        colocarBombas(0, linhas / 2,0, colunas / 2,bombasPorQuadrante,tabuleiro,proibidas);
+        //superior direito
+        colocarBombas(0, linhas/2, colunas/2 , colunas,bombasPorQuadrante,tabuleiro,proibidas);
+        //inferior esquerdo
+        colocarBombas(linhas/2, linhas,0,colunas/2,bombasPorQuadrante,tabuleiro,proibidas);
+        //inferior direito
+        colocarBombas(linhas/2, linhas,colunas/2,colunas,bombasPorQuadrante,tabuleiro,proibidas);
 
-
-            if(tabuleiro[linha][coluna] !== -1 && !éProibida){
-                tabuleiro[linha][coluna] = -1;
-                bombasColocadas++;
-            }
-        }
+    }
+        
+       
     
+}
+
+function colocarBombas(LinhaIic, LinhaFin,ColunaInic,ColunaFinal,Quantidade,tabuleiro,proibidas){
+    let colocadas = 0;
+    while(colocadas < Quantidade){
+        const linha = Math.floor(Math.random() * (LinhaFin - LinhaIic)) + LinhaIic;
+        const coluna = Math.floor(Math.random() * (ColunaFinal - ColunaInic)) + ColunaInic;
+
+        const éProibida = proibidas.some(([x, y]) => x === linha && y === coluna);
+
+        if (tabuleiro[linha][coluna] !== -1 && !éProibida) {
+            tabuleiro[linha][coluna] = -1;
+            colocadas++;
+        }
+    }
+    return colocadas;
+
 }
 
 function colocarNumeros(dificuldade,tabuleiro){
@@ -74,78 +107,43 @@ function colocarNumeros(dificuldade,tabuleiro){
         [1, -1],  [1, 0],  [1, 1]
       ];
 
-
-    if(dificuldade === 'facil'){
+    function posicionarNum(linhas,colunas){
         for(let i = 0;i < linhas; i++){ 
-                for(let j = 0; j < colunas; j++){
-                    if(tabuleiro[i][j] === -1){
-                        for(const [x,y] of posicoes){
-                            const novalinha = x + i;
-                            const novacoluna = y + j;
+            for(let j = 0; j < colunas; j++){
+                if(tabuleiro[i][j] === -1){
+                    for(const [x,y] of posicoes){
+                        const novalinha = x + i;
+                        const novacoluna = y + j;
 
-                            if (
-                                novalinha >= 0 && novalinha < linhas &&
-                                novacoluna >= 0 && novacoluna < colunas &&
-                                tabuleiro[novalinha][novacoluna] !== -1
-                              ) {
-                                tabuleiro[novalinha][novacoluna] += 1;
-                              }
+                        if (
+                            novalinha >= 0 && novalinha < linhas &&
+                            novacoluna >= 0 && novacoluna < colunas &&
+                            tabuleiro[novalinha][novacoluna] !== -1
+                          ) {
+                            tabuleiro[novalinha][novacoluna] += 1;
+                          }
 
-                        }
-
-                        }
                     }
 
-            }
+                    }
+                }
+
+        }
+    }
+
+
+    if(dificuldade === 'facil'){
+       posicionarNum(linhas,colunas)
             
 
         } else if(dificuldade === 'medio'){
-            for(let i = 0;i < linhas; i++){ 
-                    for(let j = 0; j < colunas; j++){
-                        if(tabuleiro[i][j] === -1){
-                            for(const [x,y] of posicoes){
-                                const novalinha = x + i;
-                                const novacoluna = y + j;
-
-                                if (
-                                    novalinha >= 0 && novalinha < linhas &&
-                                    novacoluna >= 0 && novacoluna < colunas &&
-                                    tabuleiro[novalinha][novacoluna] !== -1
-                                ) {
-                                    tabuleiro[novalinha][novacoluna] += 1;
-                                }
-
-                            }
-
-                            }
-                        }
-
-                }
-                console.log(tabuleiro);
+            posicionarNum(linhas,colunas)
+            console.log(tabuleiro);
             
 
         } else if(dificuldade === 'dificil'){
-            for(let i = 0;i < linhas; i++){ 
-                for(let j = 0; j < colunas; j++){
-                    if(tabuleiro[i][j] === -1){
-                        for(const [x,y] of posicoes){
-                            const novalinha = x + i;
-                            const novacoluna = y + j;
-
-                            if (
-                                novalinha >= 0 && novalinha < linhas &&
-                                novacoluna >= 0 && novacoluna < colunas &&
-                                tabuleiro[novalinha][novacoluna] !== -1
-                            ) {
-                                tabuleiro[novalinha][novacoluna] += 1;
-                            }
-
-                        }
-
-                        }
-                    }
-
-            }
+            posicionarNum(linhas,colunas);
+            console.log(tabuleiro);
         }
 
 
