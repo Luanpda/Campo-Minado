@@ -16,7 +16,7 @@ export function getTabuleiro() {
 
 export function setTabuleiro(novoTabuleiro) {
     tabuleiro = novoTabuleiro;
-}
+}3
 
 export function resetarTabuleiro() {
     tabuleiro = null;
